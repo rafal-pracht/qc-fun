@@ -60,11 +60,17 @@ def create_qram(data, naddress, datareg, addressreg, ancillareg, fn_create_circu
     return qram
 
 
-def optimal_grover_iteration(qubit, M):
+def optimal_grover_iteration(qubit, M, epsilon=0.05):
+    """
+    Function calculate the optimal number of iteration in grover search algorithm
+    :param qubit: the number of qubits
+    :param M: the expected number of solutions
+    :param epsilon: the cut-off, if we are exactly between two natural number we prefer the smaller one
+    """
     N = qubit ** 2
 
     theta = np.arcsin(np.sqrt(M / N))
-    return round(np.pi / (theta * 4) - 0.5)
+    return round(np.pi / (theta * 4) - 0.5 - epsilon)
 
 
 def find_solution(data, expected_solution_number, ancilla_n=1):
